@@ -1,0 +1,9 @@
+{
+  "path-sound": "./sound",
+  "tg-bot": "836315256:AAEsA3NswS8oO7vVFcH6AatvK8fURqo0otQ",
+  "tg-group": -1001708550430,
+  "audio-threshold-on": 1500,
+  "audio-threshold-off": 500,
+  "audio-time-low": 200,
+  "audio-time-hi": 500
+}
