@@ -1,0 +1,15 @@
+[Unit]
+Description=Rario to telegram
+After=syslog.target
+After=network.target
+
+[Service]
+Type=simple
+User=anton
+WorkingDirectory=/home/anton/kolosradio
+ExecStart=/usr/bin/python3 /home/anton/kolosradio/main.py config.json
+RestartSec=10
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
