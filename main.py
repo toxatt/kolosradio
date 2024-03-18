@@ -5,12 +5,13 @@
 
 import tempfile
 import os
+import threading
 from pathlib import Path
 import sys
 from config import Config
 from record import Record as Trecord
 from Telegram import Telegram as TTelegram
-
+#from multiprocessing import Process
 
 # получить настройки
 file_json = "config.json"
@@ -45,7 +46,13 @@ if __name__ == '__main__':
 
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
-Trecord(PARAMS).start()
-TTelegram(PARAMS).start()
+t1 = threading.Thread(target=Trecord(PARAMS).start(), daemon=True)
+t2 = threading.Thread(target=TTelegram(PARAMS).start(), daemon=True)
+t1.start()
+t2.start()
+t1.join()
+t2.join()
+#Trecord(PARAMS).start()
+#TTelegram(PARAMS).start()
 
 
