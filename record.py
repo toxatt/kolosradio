@@ -6,6 +6,7 @@ import audioop
 import pyaudio
 import wave
 import time
+import sys
 
 class Record(Thread):
     def __init__(self,params):
@@ -24,24 +25,30 @@ class Record(Thread):
         chunk = self.chunk
         try:
             print("Start searching for devices")
-          #  dev = self.p.get_device_info_by_index()
             for i in range(self.p.get_device_count()):
                 print(i, self.p.get_device_info_by_index(i)['name'])
-                x =  self.p.get_device_info_by_index(i)
-            print("default device -> ", self.p.get_device_info_by_index())
+                #   info = self.p.get_device_info_by_index(i)
+                # print("Device {} ----------- {}".format(info["index"], info["name"]))
+            print("default device -> ", self.p.get_default_input_device_info()['index'])
             index = self.p.get_default_input_device_info()['index']
-
             stream = self.p.open(format=pyaudio.paInt16,
                                  channels=2, rate=44100,
                                  input=True,
                                  input_device_index=index,
                                  frames_per_buffer=self.chunk)
+            print(stream)
             frames = []  # Инициализировать массив для хранения кадров
             record = 0
             time_on = 0
             time_off = 0
             trigger = 0
             time_p = 0
+        except:
+            print('error sound device')
+            #            sys.exit('sound device open error ')
+            sys.exit()
+            
+        try:
             if not os.path.isdir("%s" % self.path_sound):
                 os.makedirs("%s" % self.path_sound)
             while True:
